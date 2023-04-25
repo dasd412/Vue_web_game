@@ -5,11 +5,56 @@
     <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <title>gugudan</title>
 </head>
 
 <body>
-
+    <div id="root"><!-- vue가 제어하는 dom 영역-->
+        <div>{{first}} 곱하기 {{second}}는?</div> <!-- vue 렌더링은 {{ }}로 하면 된다!-->
+        <form v-on:submit="onSubmitForm"><!--on event listener 라고 보면 됨-->
+            <input type="number" ref="answer" v-model="value">
+            <button type="submit">입력</button>
+            <div>{{value}}</div> <!-- v-model에 입력되는 값이 실시간으로 렌더링 된다! (양방향 바인딩 때문이라는데?)-->
+        </form>
+        <div id="result">{{result}}</div><!-- 결괏값 렌더링 -->
+    </div>
 </body>
+
+<script>
+    // DOM을 바꾸거나 렌더링 트리 변경하는 작업은 vue가 알아서 해준다.
+    // 이를 통해 프로그래머는 데이터를 중심으로 생각할 수 있게 해주었다.
+    const app = new Vue({
+        el: "#root", //html 내 root라는 이름의 dom을 제어한다.
+        data: {
+            first: Math.ceil(Math.random() * 9),
+            second: Math.ceil(Math.random() * 9),
+            value: '',
+            result: '',
+        },
+        methods: {
+            onSubmitForm(e) {
+                e.preventDefault();//페이지 새로 고침 막기 위한 코드
+
+                console.log(this);
+                console.log(this.first, this.second, this.value);
+
+                if (this.first * this.second === parseInt(this.value)) {
+                    this.result = "correct!";
+                    // 맞으면 재초기화!
+                    this.first = Math.ceil(Math.random() * 9);
+                    this.second = Math.ceil(Math.random() * 9);
+                    this.value = '';
+
+                    this.$refs.answer.focus();//$refs를 활용하면 직접 dom에 접근할 수 있다. 단, $refs는 남용하면 안된다!! 특히 데이터 직접 조작은 금지!
+                    
+                } else {
+                    this.result = "this is not answer!";
+                    this.value = '';
+                }
+            },
+        },
+    });
+</script>
 
 </html>
