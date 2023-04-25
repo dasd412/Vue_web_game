@@ -10,14 +10,19 @@
 </head>
 
 <body>
-    <div id="root">
-        <div>pushed like button</div>
-        <button>Like</button>
+
+    <div id="root"> <!-- vue의 통제 대상 -->
+        <!-- 형제 태그면서 인접해야만 v-if와 v-else-if, v-else를 같이 사용할 수 있다.-->
+        <div v-if="liked">pushed like button</div> <!-- liked가 참이면 나타남-->
+        <button v-else v-on:click="onClickButton()">Like</button> <!-- liked가 거짓이면 나타남 -->
     </div>
+
 </body>
+
 <script>
+    //vue를 이용하게 되면, 데이터만 조작해도 알아서 렌더링 해준다!
     const app = new Vue({
-        el: '#root',
+        el: '#root',// 통제 대상
         data: {
             liked: false,
         },
