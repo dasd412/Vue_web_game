@@ -1,0 +1,17 @@
+# Ignore build output
+/dist
+/build
+
+# Ignore node_modules directory
+/node_modules
+
+# Ignore any generated files or caches
+.DS_Store
+*.log
+.cache
+*.lock
+*.sqlite
+*.pyc
+*.pyo
+*.egg-info/
+__pycache__/
