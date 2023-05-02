@@ -49,4 +49,14 @@ createApp(NumberBaseball).mount("#root");
 ***
 
 
+[webpack watch]
 
+package.json script 내에 
+
+```
+  "scripts": {
+    "build": "webpack --watch"
+  },
+```
+
+라고 작성하면, npm run build를 매번 할 필요 없이 파일이 바뀔 때마다 자동 빌드 해준다.
