@@ -17,8 +17,19 @@ module.exports={
     },
     module:{// 웹팩의 핵심.
         rules: [{
-            test : /\.vue$/, // 파일명이 .vue로 끝나는 파일에 대해
-            loader: 'vue-loader', 
+            test : /\.vue$/, // 파일명이 .vue로 끝나는 파일에 대해 로더 적용 (vue -> js)
+            use : 'vue-loader', 
+        },{
+            test: /\.css$/, // 파일명이 .css로 끝나는 파일에 대해 로더 적용 (css -> js)
+            use: [
+                'vue-style-loader',
+                {
+                    loader: 'css-loader',
+                    options: {
+                        esModule: false,
+                    }
+                },
+            ]
         }],
     },
     plugins:[
@@ -27,5 +38,11 @@ module.exports={
     output:{// dist 디렉토리에 app.js가 최종 결과물로 만들어진다.
         filename: '[name].js',
         path: path.join(__dirname,'dist'), // == ./dist/
+        publicPath: '/dist',
     },
+    devServer: {
+        devMiddleware: {publicPath: '/dist'},
+        static: {directory: path.resolve(__dirname)},
+        hot: true
+    }
 };
